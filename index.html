@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Css3旋转动画</title>
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<style>
+		*{
+			font-family: 'Microsoft Yahei';
+		}
+		html,body{
+			height: 100%;
+			overflow: hidden;
+		}
+		body{
+			padding: 0;
+			margin: 0;
+			background: #2F4056;
+			display: -webkit-flex; /* Safari */
+		    -webkit-align-items: center; /* Safari 7.0+ */
+		    display: flex;
+		    align-items: center;
+		}
+		.box{
+			height: auto;
+			overflow: hidden;
+			-webkit-flex: 1; /* Safari 6.1+ */
+   			flex: 1;
+		}
+		.cd{
+			width: 400px;
+			height: auto;
+			overflow: hidden;
+			margin: 0 auto;
+			position: relative;
+		}
+		.demo:before{
+			/*content: '';*/
+			width: 20%;
+			height: 20%;
+			border-radius: 100%;
+			background-color: #f2f2f2;
+			display: block;
+		}
+		.demo{
+			display: -webkit-flex; /* Safari */
+			display: flex;
+			-webkit-align-items: center; /* Safari 7.0+ */
+			align-items: center;
+			-webkit-justify-content: center; /* Safari 6.1+ */
+			justify-content: center;
+			width: 350px;
+			height: 350px;
+			margin:0 auto;
+			border:10px solid #333;
+			border-radius: 100%;
+			background-color: #393D49;
+			background-image: url("bg.jpg");
+			background-position: center center;
+			background-size: 100%;
+			background-repeat: no-repeat;
+			animation:mydemo 20s linear infinite;
+			-webkit-animation:mydemo 20s linear infinite;
+		}
+		.demo-pause{
+			animation-play-state:paused;
+			-webkit-animation-play-state:paused;
+		}
+		.btn{
+			display:inherit;
+			height: 38px;
+			line-height: 38px;
+			padding: 0 18px;
+			background-color: #1E9FFF;
+			color: #fff;
+			white-space: nowrap;
+			text-align: center;
+			border: none;
+			border-radius: 2px;
+			cursor: pointer;
+			opacity: 0.9;
+			outline: none;
+		}
+		#btn{
+			width: 100%;
+			margin:20px 0;
+		}
+		.time{
+			color:#c2c2c2;
+			text-align: center;
+		}
+		.next{
+			width: 0;
+			background:#333;
+			height: 2px;
+			display: block;
+			position: absolute;
+			top:498px;
+			left: 0px;
+
+		}
+		.loading { 
+			width:100%; 
+			height: 2px; 
+			background: #c2c2c2; 
+			-webkit-appearance: none !important;
+			outline: none;
+		}
+
+		.loading::-webkit-slider-thumb { 
+			width: 10px; 
+			height: 10px; 
+			border-radius: 100%;
+			cursor: pointer;
+			background: #393D49;
+			-webkit-box-shadow: 0 0 2px #eee;
+			-webkit-appearance: none !important
+		}
+		.lrc{
+			padding: 0 20px;
+			-webkit-flex: 1; /* Safari 6.1+ */
+   			flex: 1;
+			height: 70%;
+			overflow: hidden;
+			text-align: center;
+			color:#f2f2f2;
+		}
+		.lrc p{
+			margin: 0;
+			height: 50px;
+			line-height: 50px
+		}
+		#lrc{
+			height: auto;
+			overflow: hidden;
+		}
+		.active{
+			color: #F7B824;
+			font-size: 24px;
+		}
+	}
+	@keyframes mydemo{
+		from {
+			transform:rotate(0deg);
+			-ms-transform:rotate(0deg); 
+			-moz-transform:rotate(0deg);
+			-webkit-transform:rotate(0deg);
+			-o-transform:rotate(0deg); 
+		}
+		to {
+			transform:rotate(360deg);
+			-ms-transform:rotate(360deg);
+			-moz-transform:rotate(360deg);
+			-webkit-transform:rotate(360deg);
+			-o-transform:rotate(360deg);
+		}
+	}
+	@-webkit-keyframes mydemo{
+		from {
+			transform:rotate(0deg);
+			-ms-transform:rotate(0deg); 
+			-moz-transform:rotate(0deg);
+			-webkit-transform:rotate(0deg);
+			-o-transform:rotate(0deg); 
+		}
+		to {
+			transform:rotate(360deg);
+			-ms-transform:rotate(360deg);
+			-moz-transform:rotate(360deg);
+			-webkit-transform:rotate(360deg);
+			-o-transform:rotate(360deg);
+		}
+	}
+	@media screen and (max-width: 860px){
+		body{
+			display:block;
+		}
+		.cd{
+			width: 280px;
+		}
+		.lrc{
+			position: fixed;
+			left:50%;
+			margin-left:-140px;
+			top:270px;
+			height: 111px;
+			z-index: -1;
+		}
+		#demo{
+			margin-top: 50px;
+			margin-bottom:130px;
+			width: 180px;
+			height: 180px;
+			background-position: center center;
+			background-size: 100%;
+		}
+		.next{
+			top:418px;
+			display: none;
+		}
+	}
+</style>
+</head>
+<body>
+	<div class="box">
+		<div class="cd">
+			<div id="demo" class="demo demo-pause"></div>
+			<audio id="music">  
+				<source src="1.mp3" /> 
+			</audio> 
+			<h3 id="time" class="time"></h3>
+			<input type="range" id="loading" class="loading" min="0" max="100" value="0"/>
+			<button id="btn" class="btn" data-switch="false" data-run-text="开始" data-pause-text="暂停"></button>
+			<div class="next" id="next"></div>
+		</div>
+	</div>
+	<div class="lrc">
+		<div id="lrc"></div>
+	</div>
+	<script type="text/javascript" src="lrc.js"></script>
+	<script type="text/javascript">
+		var musicAllTime,mm,ss,musicNowTime;
+		function DataConver(name){
+			if(name<10){
+				name ='0'+name;
+			}
+			return name;
+		}
+		Object.prototype.getAllTime=function(){
+			musicAllTime=music.duration;
+			mm=parseInt(musicAllTime/60);
+			ss=parseInt(musicAllTime-mm*60);
+			musicAllTime=DataConver(mm)+':'+DataConver(ss);
+			return musicAllTime;
+		};
+		Object.prototype.getNowTime=function(){
+			musicNowTime=music.currentTime;
+			mm=parseInt(musicNowTime/60);
+			ss=parseInt(musicNowTime-mm*60);
+			musicNowTime=DataConver(mm)+':'+DataConver(ss);
+			return musicNowTime;
+		};
+		Object.prototype.Css=function(style,value){
+			this.style[style]=value;
+		}
+		Object.prototype.addClass=function(cls){
+			if(this.className.indexOf(cls)==-1){
+				this.className+=''+cls;
+			}
+		}
+		Object.prototype.removeClass=function(cls){
+			if(this.className.indexOf(cls)>-1){
+				this.className=this.className.replace(cls,'');
+			}
+		}
+	</script>
+	<script type="text/javascript">
+		var demo=document.getElementById('demo');
+		var btn=document.getElementById('btn');
+		var music=document.getElementById('music');
+		var time=document.getElementById('time');
+		var loading=document.getElementById('loading');
+		var next=document.getElementById('next');
+		btn.innerText=btn.dataset.runText;
+		btn.addEventListener('click', function(){
+			var btnText=btn.innerText;
+			if(btn.dataset.switch=='false'){
+				btn.innerText=btn.dataset.pauseText;
+				btn.dataset.switch='true';
+				demo.removeClass('demo-pause');
+				music.play();							
+			}else if(btn.dataset.switch=='true'){
+				btn.innerText=btn.dataset.runText;
+				demo.addClass('demo-pause');
+				btn.dataset.switch='false';
+				music.pause();
+			}
+		},false);
+		var loadBtn=false;
+		loading.addEventListener('mousedown',function(){
+			loadBtn=true;
+		},false);
+		loading.addEventListener('mousemove',function(){
+			var jindu=parseInt((parseInt(loading.value)/parseInt(music.duration))*100);
+			next.Css('width',jindu+'%');
+		},false);
+		loading.addEventListener('mouseup',function(){
+			loadBtn=false;
+			music.currentTime=loading.value;
+		},false);
+		setTimeout(function(){
+			loading.setAttribute('max', music.duration);
+			time.innerText=music.getNowTime()+'/'+music.getAllTime();
+		}, 100);
+	</script>
+	<script type="text/javascript"> 
+		var lrc=document.getElementById('lrc');
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', '/data.lrc');
+		xhr.responseType = 'text';
+
+		xhr.onload = function() {
+			var lyric=parseLyric(xhr.response);
+			for (var i = 0, l = lyric.length; i < l; i++) {
+				if(lyric[i][1]==''){
+					lrc.innerHTML +='<p>&nbsp;</p>';
+				}else{
+					lrc.innerHTML +='<p>'+lyric[i][1]+'</p>';
+				}
+			};
+			var lrclist=lrc.getElementsByTagName('p');
+			var lrcHeight=lrclist[0].offsetHeight;
+			music.ontimeupdate = function(e) {
+				time.innerText=music.getNowTime()+'/'+music.getAllTime();
+				var jindu=parseInt((parseInt(music.currentTime)/parseInt(music.duration))*100);
+				if(loadBtn==false){
+					loading.value=parseInt(music.currentTime);
+				}
+				next.Css('width',jindu+'%');
+				for (var i=0;i<lrclist.length;i++) {
+					if (this.currentTime > lyric[i][0]){
+						if(lyric[i][1]==''&&i!=lrclist.length){
+							lrclist[i+1].addClass('active');						
+						}else{
+							lrclist[i].addClass('active');
+						}
+						lrc.style.marginTop=-i*lrcHeight+'px';
+					};
+				};
+			}
+		};
+		xhr.onerror = function() {
+			console.log("Oops, error");
+		};
+		xhr.send();
+	</script>
+</body>
+</html>
